@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+#bird {
+  width: 40px;
+  height: 40px;
+  background-image: url("../images/bird.png");
+  background-size: 100% 100%;
+  position: absolute;
+  left: calc(50% - 15px);
+  top: calc(50% - 50px);
+}
+
+.top-g {
+  position: absolute;
+  width: 50px;
+  background: black;
+  top: 0;
+  left: 100%;
+}
+
+.bottom-g {
+  position: absolute;
+  width: 50px;
+  background: black;
+  bottom: 0;
+  left: 100%;
+}
+
+#pipe-count {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 5%;
+  left: calc(50% - 50px);
+  z-index: 999;
+  text-align: center;
+  font-size: 80px;
+  color: brown;
+  visibility: hidden;
+  user-select: none;
+}
+
+#start-panel {
+  width: 200px;
+  background: gray;
+  padding: 20px;
+  border-radius: 20px;
+  position: absolute;
+  left: calc(50% - 120px);
+  top: 80px;
+  z-index: 999;
+  font-weight: bold;
+  color: #fa940e;
+}
+
+#start-panel button {
+  width: 70px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 10px auto 0;
+}
+
+#tip {
+  width: 300px;
+  height: 100px;
+  position: absolute;
+  text-align: center;
+  left: calc(50% - 150px);
+  top: calc(30% - 50px);
+  font-size: 48px;
+  color: brown;
+  visibility: hidden;
+}
