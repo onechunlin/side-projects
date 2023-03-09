@@ -20,7 +20,7 @@
     "dist"
   ],
   "publishConfig": {
-    "registry": "https://bnpm.byted.org/"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,8 @@
   },
   "scripts": {
     "dev": "ts-node lib/index.ts",
-    "build": "rm -rf dist & tsc"
+    "build": "rm -rf dist & tsc",
+    "prepublishOnly": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/onechunlin/side-projects/issues"

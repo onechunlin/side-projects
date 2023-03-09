@@ -45,7 +45,7 @@ async function main() {
           const client = new ChatGptClient(value);
           const valid = await client.checkAuth();
 
-          return valid ? true : "请输入正确的 API key!";
+          return valid ? true : "请检查网络或 API key 是否正确！";
         },
       },
     ]);
@@ -84,8 +84,8 @@ async function startConversation(client: ChatGptClient) {
     spinner.start();
     const message = await client.createChatCompletion(question);
     spinner.stop();
-    console.log(`\n${chalk.bold.green("您的问题：")}${chalk.gray(question)}`);
-    console.log(`${chalk.bold.yellow("ChatGPT：")}${chalk.gray(message)} \n`);
+    console.log(`\n${chalk.bold.green("Question: ")}${chalk.gray(question)}`);
+    console.log(`${chalk.bold.yellow("ChatGPT: ")}${chalk.gray(message)} \n`);
     await startConversation(client);
   } catch (error) {
     spinner.stop();

@@ -20,6 +20,7 @@ class ChatGptClient {
           headers: {
             Authorization: `Bearer ${this.key}`,
           },
+          timeout: 30000,
         }
       )
       .then((res) => res.data);
@@ -31,7 +32,7 @@ class ChatGptClient {
 
   public async checkAuth(): Promise<boolean> {
     try {
-      await this.createChatCompletion("");
+      await this.createChatCompletion("hi");
       return true;
     } catch (error) {
       return false;
