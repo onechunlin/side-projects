@@ -1,6 +1,6 @@
 {
   "name": "chatmate",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "可以让你在命令行使用 ChatGPT 的工具",
   "keywords": [
     "chatgpt",
@@ -17,8 +17,7 @@
     "chatmate": "./dist/index.js"
   },
   "files": [
-    "dist",
-    "assets"
+    "dist"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
