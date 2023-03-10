@@ -7,7 +7,10 @@ import chalk from "chalk";
 import { ChatGptClient } from "./util";
 import { errorLog, successLog, warningLog } from "./ui";
 
-const spinner = ora("请求数据中，请稍后...");
+const spinner = ora({
+  prefixText: chalk.gray("\n请求数据中，请稍后"),
+  spinner: "soccerHeader",
+});
 const keyFilename = "open_api_keys";
 
 async function main() {
@@ -77,19 +80,20 @@ async function startConversation(client: ChatGptClient) {
       {
         type: "input",
         name: "question",
-        message: "请输入您的问题\n",
+        message: "请输入您的问题：",
       },
     ]);
 
     spinner.start();
     const message = await client.createChatCompletion(question);
     spinner.stop();
-    console.log(`\n${chalk.bold.green("Question: ")}${chalk.gray(question)}`);
-    console.log(`${chalk.bold.yellow("ChatGPT: ")}${chalk.gray(message)} \n`);
+    // 输出会话内容
+    console.log(`\n${chalk.bold.blue("Question: ")}${chalk.gray(question)}`);
+    console.log(`${chalk.bold.green("ChatGPT: ")}${chalk.yellow(message)} \n`);
     await startConversation(client);
   } catch (error) {
     spinner.stop();
-    errorLog("出错啦！");
+    errorLog(error instanceof Error ? error.message : "出错啦！");
   }
 }
 
