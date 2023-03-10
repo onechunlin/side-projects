@@ -1,6 +1,6 @@
 {
   "name": "chatmate",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "可以让你在命令行使用 ChatGPT 的工具",
   "keywords": [
     "chatgpt",
