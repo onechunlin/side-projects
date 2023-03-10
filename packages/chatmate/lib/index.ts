@@ -11,14 +11,14 @@ const spinner = ora({
   prefixText: chalk.gray("\n请求数据中，请稍后"),
   spinner: "soccerHeader",
 });
-const keyFilename = "open_api_keys";
+const keyFilePath = `${process.env.HOME}/open_api_keys`;
 
 async function main() {
   console.log("欢迎使用 Chatmate！\n");
 
   let openApiKey = "";
   // 如果没有输入过 API key 则需要输入
-  if (!fs.existsSync(keyFilename)) {
+  if (!fs.existsSync(keyFilePath)) {
     const { hasOpenApiKey } = await inquirer.prompt<{ hasOpenApiKey: boolean }>(
       [
         {
@@ -55,19 +55,19 @@ async function main() {
     successLog("登录成功！\n");
     openApiKey = key;
     // 文件写入
-    fs.writeFile(keyFilename, openApiKey, (err) => {
+    fs.writeFile(keyFilePath, openApiKey, (err) => {
       if (err) {
         warningLog("API key 写入存储失败！");
       }
       // 更改文件权限为仅可读
-      fs.chmod(keyFilename, 0o444, (err) => {
+      fs.chmod(keyFilePath, 0o444, (err) => {
         if (err) {
           warningLog("更改文件权限失败！");
         }
       });
     });
   } else {
-    openApiKey = fs.readFileSync(keyFilename).toString();
+    openApiKey = fs.readFileSync(keyFilePath).toString();
   }
 
   const client = new ChatGptClient(openApiKey);
