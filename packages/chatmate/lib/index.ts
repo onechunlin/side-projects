@@ -1,16 +1,10 @@
 #!/usr/bin/env node
 
 import inquirer from "inquirer";
-import ora from "ora";
 import fs from "fs";
-import chalk from "chalk";
 import { ChatGptClient } from "./util";
 import { errorLog, successLog, warningLog } from "./ui";
 
-const spinner = ora({
-  prefixText: chalk.gray("\n请求数据中，请稍后"),
-  spinner: "soccerHeader",
-});
 const keyFilePath = `${process.env.HOME}/open_api_keys`;
 
 async function main() {
@@ -84,16 +78,11 @@ async function startConversation(client: ChatGptClient) {
       },
     ]);
 
-    spinner.start();
-    const message = await client.createChatCompletion(question);
-    spinner.stop();
-    // 输出会话内容
-    console.log(`\n${chalk.bold.blue("Question: ")}${chalk.gray(question)}`);
-    console.log(`${chalk.bold.green("ChatGPT: ")}${chalk.yellow(message)} \n`);
+    await client.createChatCompletion(question);
     await startConversation(client);
   } catch (error) {
-    spinner.stop();
     errorLog(error instanceof Error ? error.message : "出错啦！");
+    await startConversation(client);
   }
 }
 
