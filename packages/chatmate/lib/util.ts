@@ -59,25 +59,50 @@ class DataTransform extends Transform {
   }
 }
 
+class LimitQueue {
+  private capacity: number;
+  private queue: unknown[];
+
+  constructor(capacity: number) {
+    this.capacity = capacity;
+    this.queue = [];
+  }
+
+  enqueue(item: unknown) {
+    if (this.queue.length === this.capacity) {
+      // 如果队列已满，删除队首元素
+      this.queue.shift();
+    }
+    // 将元素添加到队尾
+    this.queue.push(item);
+  }
+
+  getQueue() {
+    // 返回当前队列
+    return this.queue;
+  }
+}
+
 class ChatGptClient {
   private key: string;
-  private messages: Message[];
+  private messageQueue: LimitQueue;
 
   constructor(apiKey: string) {
     this.key = apiKey.trim();
-    this.messages = [];
+    // 仅保留 5 条上下文信息，防止堆栈溢出
+    this.messageQueue = new LimitQueue(5);
   }
 
   public async createChatCompletion(content: string): Promise<void> {
     // 将用户发送信息放进消息队列
-    this.messages.push({ role: "user", content });
+    this.messageQueue.enqueue({ role: "user", content });
     spinner.start();
     const result = await axios
       .post(
         "https://api.openai.com/v1/chat/completions",
         {
           model: "gpt-3.5-turbo",
-          messages: this.messages,
+          messages: this.messageQueue.getQueue(),
           stream: true,
         },
         {
@@ -98,7 +123,7 @@ class ChatGptClient {
     return new Promise((resolve) => {
       const dataTransform = new DataTransform((message: string) => {
         // 将助手返回信息放进消息队列
-        this.messages.push({
+        this.messageQueue.enqueue({
           role: "assistant",
           content: message,
         });
